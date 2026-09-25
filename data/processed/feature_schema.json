@@ -1,0 +1,64 @@
+{
+  "available_at_ingestion": [
+    "risk_score",
+    "affected_users",
+    "failed_login_attempts",
+    "successful_login_attempts",
+    "source_port",
+    "destination_port",
+    "word_count",
+    "attack_vector",
+    "event_source",
+    "geographical_location",
+    "threat_actor",
+    "device_type",
+    "affected_system",
+    "asset_type",
+    "asset_criticality",
+    "protocol",
+    "business_impact",
+    "mitre_tactic",
+    "mitre_technique_id",
+    "ingestion_source_id",
+    "incident_text"
+  ],
+  "generated_during_preprocessing": [
+    "TF-IDF n-grams from incident_text",
+    "numeric median imputation",
+    "categorical most-frequent imputation and one-hot encoding"
+  ],
+  "targets": [
+    "threat_category",
+    "severity_level"
+  ],
+  "post_incident_excluded": [
+    "recommended_response",
+    "investigation_notes",
+    "resolution",
+    "analyst_feedback",
+    "false_positive",
+    "status",
+    "response_time_minutes",
+    "predicted_threat_category",
+    "topic_label"
+  ],
+  "leakage_prone_excluded": [
+    "priority",
+    "confidence_score"
+  ],
+  "identifier_or_sensitive_excluded": [
+    "incident_id",
+    "timestamp",
+    "source_ip",
+    "destination_ip",
+    "username",
+    "domain",
+    "url",
+    "file_name",
+    "file_hash",
+    "ioc_values",
+    "named_entities",
+    "keywords"
+  ],
+  "policy": "Only fields known at ingestion with defensible prediction-time availability are used. Audit availability before production."
+}

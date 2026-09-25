@@ -1,0 +1,6 @@
+"""Parameterized SQL statements; values are always passed separately."""
+INSERT_INCIDENT = """INSERT INTO incidents (incident_id, timestamp, incident_text, threat_category, severity_level, payload) VALUES (%s,%s,%s,%s,%s,%s::jsonb) ON CONFLICT (incident_id) DO UPDATE SET payload=EXCLUDED.payload RETURNING incident_id"""
+INSERT_PREDICTION = """INSERT INTO predictions (incident_id, threat_category_prediction, threat_confidence, severity_prediction, severity_confidence, model_version) VALUES (%s,%s,%s,%s,%s,%s) RETURNING id"""
+INSERT_FEEDBACK = """INSERT INTO analyst_feedback (incident_id, predicted_category, correct_category, predicted_severity, correct_severity, false_positive, feedback, analyst_id) VALUES (%s,%s,%s,%s,%s,%s,%s,%s) RETURNING id"""
+LIST_INCIDENTS = "SELECT incident_id,timestamp,threat_category,severity_level,payload FROM incidents ORDER BY timestamp DESC LIMIT %s OFFSET %s"
+GET_INCIDENT = "SELECT incident_id,timestamp,incident_text,threat_category,severity_level,payload FROM incidents WHERE incident_id=%s"

@@ -1,0 +1,16 @@
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+mlruns/
+mlflow.db
+mlartifacts/
+models/artifacts/*
+!models/artifacts/.gitkeep
+reports/**/*.html
+data/processed/*.csv
+data/reports/*.json
+*.log
+frontend/node_modules/
+frontend/dist/

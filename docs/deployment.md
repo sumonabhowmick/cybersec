@@ -1,0 +1,3 @@
+# Local runbook
+
+Use Python 3.11+, a virtual environment, PostgreSQL, and Node.js. Install `requirements.txt`, copy `.env.example` to `.env`, set database credentials and optional Gemini credentials, create/migrate the database, run `python scripts/train_pipeline.py`, then `python run.py`. In another terminal run `cd frontend`, `npm install`, and `npm run dev`. MLflow can be opened with `python scripts/run_mlflow.py`. Native Windows TensorFlow is CPU-oriented; use WSL2 for supported NVIDIA GPU setups. The demo API has no authentication; do not expose it to an untrusted network. Full `/analyze` still stores model output when Gemini is not configured, and returns an explicit unavailable status for that assistance component.
