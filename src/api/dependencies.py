@@ -28,12 +28,21 @@ def get_comparison_report():
 def get_overview():
     import pandas as pd
     path=DATA_PROCESSED/"cleaned_incidents.csv"
-    if not path.exists(): return {"total_incidents":0,"high_critical":0,"threat_categories":0,"categories":[],"severity":[],"activity":[],"false_positive_rate":None,"average_response_time":None}
+    if not path.exists(): return {"total_incidents":0,"high_critical":0,"threat_categories":0,"categories":[],"severity":[],"activity":[],"activity_by_category":{},"false_positive_rate":None,"average_response_time":None}
     frame=pd.read_csv(path,low_memory=False)
     severity=frame["severity_level"].fillna("Unknown").value_counts()
-    categories=frame["threat_category"].fillna("Unknown").value_counts()
+    category_labels=frame["threat_category"].fillna("Unknown").astype(str)
+    categories=category_labels.value_counts()
     timestamps=pd.to_datetime(frame["timestamp"],errors="coerce",utc=True)
-    activity=timestamps.dt.date.value_counts().sort_index().tail(7)
+    date_labels=timestamps.dt.date
+    activity=date_labels.value_counts().sort_index().tail(7)
+    activity_days=list(activity.index)
+    category_days=pd.DataFrame({"category":category_labels,"day":date_labels}).dropna(subset=["day"])
+    grouped_activity=category_days.groupby(["category","day"]).size()
+    activity_by_category={
+        category:[{"day":str(day),"value":int(grouped_activity.get((category,day),0))} for day in activity_days]
+        for category in categories.index
+    }
     false_positive_rate=None
     if "false_positive" in frame:
         values=frame["false_positive"].astype("string").str.lower()
@@ -45,4 +54,5 @@ def get_overview():
         "categories":[{"name":str(k),"count":int(v)} for k,v in categories.items()],
         "severity":[{"name":str(k),"count":int(v)} for k,v in severity.items()],
         "activity":[{"day":str(k),"value":int(v)} for k,v in activity.items()],
+        "activity_by_category":activity_by_category,
         "false_positive_rate":false_positive_rate,"average_response_time":float(response.mean()) if response.notna().any() else None}

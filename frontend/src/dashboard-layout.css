@@ -1,0 +1,57 @@
+.chart-panel {
+  display: flex;
+  flex-direction: column;
+  height: 360px;
+  min-height: 360px;
+}
+
+.chart-panel .chart {
+  flex: 1;
+  height: auto;
+  min-height: 210px;
+}
+
+.chart-panel .select {
+  max-width: 170px;
+  cursor: pointer;
+}
+
+.chart-panel .select option {
+  color: #e7edf7;
+  background: #101a28;
+}
+
+.chart-panel + .panel {
+  display: flex;
+  flex-direction: column;
+  height: 360px;
+  min-height: 360px;
+  min-width: 0;
+}
+
+.chart-panel + .panel .bars {
+  flex: 1;
+  min-height: 0;
+  max-height: 250px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 8px;
+  scrollbar-color: #35445a transparent;
+  scrollbar-width: thin;
+}
+
+.chart-panel + .panel .chart-note {
+  margin-top: auto;
+}
+
+@media (max-width: 740px) {
+  .chart-panel,
+  .chart-panel + .panel {
+    height: 340px;
+    min-height: 340px;
+  }
+
+  .chart-panel .chart {
+    min-height: 200px;
+  }
+}
